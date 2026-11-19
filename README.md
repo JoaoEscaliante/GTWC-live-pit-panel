@@ -1,8 +1,6 @@
-# GTWC-live-pit-panel
-Automated race weekend schedule and alert system for motorsport pit walls
-
-
 # 🏁 GTWC Live Pit Wall Panel (Painel Ao Vivo de Box)
+
+> Automated race weekend schedule and alert system for motorsport pit walls.
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
@@ -21,7 +19,22 @@ O **GTWC Live Pit Wall Panel** é um painel digital automatizado e em tempo real
 * **Atualização Automática (Zero-Touch):** Sistema de loop integrado para atualizar a interface silenciosamente a cada 60 segundos, garantindo que o relógio e as barras andem sem necessidade de atualizar o navegador manualmente.
 
 ## 📺 Prévias do Painel
-*(Adicione seus prints de tela aqui! Apague este texto e use o formato abaixo, colocando o link das suas imagens)*
+
+### Visão Geral do Cronograma
+<p align="center">
+  <img src="assets/painel-visao-geral.jpeg" width="900" alt="Painel de Box GTWC Australia - visão geral da semana">
+</p>
+
+### Demonstração 1
+<p align="center">
+  <video src="assets/demo-1.mp4" width="900" controls muted></video>
+</p>
+
+### Demonstração 2
+<p align="center">
+  <video src="assets/demo-2.mp4" width="640" controls muted></video>
+</p>
+
 ## 🛠️ Arquitetura e Tecnologias
 * **Linguagem:** Python
 * **Processamento de Dados:** Pandas, Expressões Regulares (Regex)
@@ -32,4 +45,18 @@ O **GTWC Live Pit Wall Panel** é um painel digital automatizado e em tempo real
 
 1. Clone este repositório:
 ```bash
-git clone [https://github.com/seu-usuario/gtwc-live-pit-panel.git](https://github.com/seu-usuario/gtwc-live-pit-panel.git)
+git clone https://github.com/JoaoEscaliante/GTWC-live-pit-panel.git
+cd GTWC-live-pit-panel
+```
+
+2. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
+
+3. Coloque o PDF do cronograma (Team Timetable) na pasta `cronogramas/`, ou envie-o depois pela barra lateral do painel.
+
+4. Execute o painel:
+```bash
+streamlit run app.py
+```

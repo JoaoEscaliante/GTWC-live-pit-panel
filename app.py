@@ -5,6 +5,8 @@ import pandas as pd
 import re
 from datetime import datetime
 import time
+import io
+from pathlib import Path
 
 #%%
 
@@ -13,12 +15,12 @@ st.set_page_config(page_title="GTWC Live Panel", page_icon="🏁", layout="wide"
 
 # 2. Motor de extração de dados:
 @st.cache_data
-def extrair_dados_sro_robusto(pdf_path):
+def extrair_dados_sro_robusto(pdf_bytes):
     linhas_finais = []
     dia_atual = "Data não identificada"
     dias_semana = ['WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
 
-    with pdfplumber.open(pdf_path) as pdf:
+    with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
         for page in pdf.pages:
             tabela = page.extract_table()
             if not tabela: continue
@@ -117,6 +119,22 @@ def gerar_card_html(row, agora_dt, dia_hoje_nome, modo_grande=False):
             <div style="font-size: 0.95em; color: #ffffff; margin: 5px 0;">{icon} {row['Sessao']}</div>{html_barra}
         </div>"""
 
+# 3. Carregamento do cronograma em PDF (sem caminhos fixos do computador):
+PASTA_CRONOGRAMAS = Path(__file__).parent / "cronogramas"
+
+def carregar_pdf():
+    """Prioridade: upload na barra lateral > primeiro PDF da pasta 'cronogramas/'."""
+    with st.sidebar:
+        st.markdown("### 📄 Cronograma")
+        arquivo = st.file_uploader("Envie o PDF do Team Timetable", type="pdf")
+    if arquivo is not None:
+        return arquivo.getvalue()
+    if PASTA_CRONOGRAMAS.exists():
+        pdfs = sorted(PASTA_CRONOGRAMAS.glob("*.pdf"))
+        if pdfs:
+            return pdfs[0].read_bytes()
+    return None
+
 # 4. CSS:
 st.markdown("""
 <style>
@@ -153,8 +171,13 @@ with col_t2:
 st.divider()
 
 # 6. Processamento Principal:
+pdf_bytes = carregar_pdf()
+if pdf_bytes is None:
+    st.info("📄 Envie o PDF do cronograma na barra lateral, ou coloque o arquivo na pasta `cronogramas/` do projeto.")
+    st.stop()
+
 try:
-    df = extrair_dados_sro_robusto(r"C:\Users\joaoc\OneDrive\Documentos\Arquivo_PDFs\Team Timetable_GTWC Australia_R1_Phillip Island V1 19MAR2026.pdf")
+    df = extrair_dados_sro_robusto(pdf_bytes)
 
     if not df.empty:
         hora_atual_int = int(agora_dt.strftime("%H%M"))
