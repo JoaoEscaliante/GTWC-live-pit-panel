@@ -27,12 +27,12 @@ O **GTWC Live Pit Wall Panel** é um painel digital automatizado e em tempo real
 
 ### Demonstração 1
 <p align="center">
-  <video src="assets/demo-1.mp4" width="900" controls muted></video>
+  <img src="assets/demo-1.gif" width="900" alt="Demonstração 1 do painel">
 </p>
 
 ### Demonstração 2
 <p align="center">
-  <video src="assets/demo-2.mp4" width="640" controls muted></video>
+  <img src="assets/demo-2.gif" width="640" alt="Demonstração 2 do painel">
 </p>
 
 ## 🛠️ Arquitetura e Tecnologias
